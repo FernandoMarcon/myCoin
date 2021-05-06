@@ -41,12 +41,25 @@ class Blockchain{
       if(currentBlock.hash !== currentBlock.calculateHash()){
         return false;
       }
+
+      if(currentBlock.previousHash !== previousBlock.hash){
+        return false;
+      }
     }
+
+    return true;
   }
 }
 
 let myCoin = new Blockchain();
+
 myCoin.addBlock(new Block(1, "10/04/2018", { amount: 4}));
 myCoin.addBlock(new Block(2, "12/04/2018", { amount: 6}));
 
-console.log(JSON.stringify(myCoin, null, 4));
+console.log("Is blockchain valid? " + myCoin.isChainValid());
+
+myCoin.chain[1].data = { amount: 100};
+myCoin.chain[1].hash = myCoin.chain[1].calculateHash();
+
+console.log("Is blockchain valid? " + myCoin.isChainValid());
+// console.log(JSON.stringify(myCoin, null, 4));
